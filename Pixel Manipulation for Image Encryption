@@ -1,0 +1,48 @@
+from PIL import Image
+import numpy as np
+
+def swap_pixels(image):
+    # Convert image to numpy array
+    img_array = np.array(image)
+
+    # Get image shape
+    height, width, channels = img_array.shape
+
+    # Swap pixel values
+    for i in range(height):
+        for j in range(width):
+            for c in range(channels):
+                img_array[i, j, c] = 255 - img_array[i, j, c]
+
+    # Convert numpy array back to image
+    swapped_image = Image.fromarray(img_array)
+
+    return swapped_image
+
+def encrypt_image(image_path):
+    # Open and load image
+    img = Image.open(image_path)
+
+    # Encrypt image (example: swap pixels)
+    encrypted_image = swap_pixels(img)
+
+    return encrypted_image
+
+def decrypt_image(encrypted_image):
+    # Decrypt image (same operation as encryption in this example)
+    decrypted_image = swap_pixels(encrypted_image)
+
+    return decrypted_image
+
+# Example usage
+if __name__ == "__main__":
+    # Encrypt an image
+    original_image_path = "original_image.jpg"
+    encrypted_image = encrypt_image(original_image_path)
+    encrypted_image.save("encrypted_image.jpg")
+
+    # Decrypt the encrypted image
+    decrypted_image = decrypt_image(encrypted_image)
+    decrypted_image.save("decrypted_image.jpg")
+
+    print("Image encryption and decryption completed.")
